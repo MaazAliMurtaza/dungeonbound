@@ -6,8 +6,26 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
-    "android": { "package": "com.dungeonbound.studentrpg", "allowBackup": false },
-    "plugins": [["expo-secure-store", { "configureAndroidBackup": true }]],
-    "experiments": { "tsconfigPaths": true }
+    "android": {
+      "package": "com.maazay.dungeonbound",
+      "allowBackup": false
+    },
+    "plugins": [
+      [
+        "expo-secure-store",
+        {
+          "configureAndroidBackup": true
+        }
+      ]
+    ],
+    "experiments": {
+      "tsconfigPaths": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9b17cdde-bfcc-4054-9499-363f940ca1d1"
+      }
+    },
+    "owner": "maazay.py"
   }
 }

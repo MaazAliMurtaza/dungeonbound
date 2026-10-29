@@ -7,6 +7,8 @@ import path from 'node:path';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const mobile = path.join(root, 'mobile');
+const appId = JSON.parse(readFileSync(path.join(mobile, 'app.json'), 'utf8')).expo.android.package;
+if (!/^[a-zA-Z]\w*(\.[a-zA-Z]\w*){2,}$/.test(appId)) throw new Error('Invalid Android package identity');
 const sdk = process.env.ANDROID_HOME || path.join(process.env.LOCALAPPDATA || '', 'Android', 'Sdk');
 const versions = readFileSync(path.join(mobile, 'node_modules/react-native/gradle/libs.versions.toml'), 'utf8');
 const version = name => new RegExp(`^${name} = "([^"]+)"`, 'm').exec(versions)?.[1];
@@ -47,7 +49,7 @@ const destination = path.join(artifacts, 'dungeonbound-debug-x86_64.apk');
 copyFileSync(built, destination);
 writeFileSync(path.join(artifacts, 'debug-build.json'), JSON.stringify({
   kind: 'local debug APK; requires Metro on port 8082; not an EAS/release build',
-  package: 'com.dungeonbound.studentrpg', abi: 'x86_64', builtAt: new Date().toISOString(),
+  package: appId, abi: 'x86_64', builtAt: new Date().toISOString(),
   sha256: createHash('sha256').update(readFileSync(destination)).digest('hex'),
 }, null, 2) + '\n');
 console.log('Debug APK saved to artifacts/dungeonbound-debug-x86_64.apk');
@@ -55,5 +57,5 @@ if (process.argv.includes('--install')) {
   const adb = path.join(sdk, 'platform-tools/adb.exe');
   run(adb, ['reverse', 'tcp:4000', 'tcp:4000']); run(adb, ['reverse', 'tcp:8082', 'tcp:8082']);
   run(adb, ['install', '-r', destination]);
-  run(adb, ['shell', 'am', 'start', '-n', 'com.dungeonbound.studentrpg/.MainActivity']);
+  run(adb, ['shell', 'am', 'start', '-n', `${appId}/.MainActivity`]);
 }

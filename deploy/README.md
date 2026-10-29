@@ -1,6 +1,6 @@
-# Deployment proposal — awaiting user approval
+# Approved deployment plan — account setup in progress
 
-This is prepared configuration, not deployment evidence. No cloud resources or EAS project have been created by this work. No cloud health URL or APK link is available.
+The user approved the proposed resources, SDK installation and source/EAS uploads with a $0 spending ceiling on 2026-10-29. This is not completed-deployment evidence. The private source repository is https://github.com/MaazAliMurtaza/dungeonbound and the linked EAS project is https://expo.dev/accounts/maazay.py/projects/dungeonbound. No hosted API or EAS build APK link is available yet.
 
 ## Proposed resources and cost boundary
 
@@ -23,6 +23,6 @@ After obtaining the real HTTPS API URL, configure `EXPO_PUBLIC_API_URL` in the E
 
 Build and install the preview APK, then repeat the Android auth/session, SecureStore, full dungeon and save/restart checks. Record the actual API URL, EAS build URL, signing/build identity and device results only once obtained. Local debug APK builds are separate development evidence and do not satisfy this hosted release checklist.
 
-## Approval needed
+## Account access still needed
 
-Confirm host choice and $0 ceiling, connect the chosen host accounts, and explicitly approve creating the resources and uploading source to the agreed private repository/EAS project. No private credentials should be pasted into chat. Physical-device checks require an actual connected Android phone; none is connected at the time of this proposal.
+Approval is recorded; do not ask for it again for this scope. Render and Neon integrations must be installed and authorized through the providers before their resources can be created. Stop if a paid plan or upgrade is required. Keep signing/account prompts interactive and never paste private credentials into chat. The Android package is `com.maazay.dungeonbound`; no prior standalone APK was distributed under the prototype package. Physical-device checks require a connected Android phone; none is connected yet.
