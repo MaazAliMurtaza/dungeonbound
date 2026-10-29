@@ -1,0 +1,18 @@
+**/node_modules/
+**/.env
+**/.env.*
+!**/.env.example
+**/.expo/
+**/.expo-shared/
+**/dist/
+**/web-build/
+**/.DS_Store
+*.log
+*.apk
+*.aab
+.checkpoints/
+# Expo native output is regenerated from app config; excludes debug keys/caches.
+mobile/android/
+mobile/ios/
+*.keystore
+*.jks

@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "Dungeonbound",
+    "slug": "dungeonbound",
+    "scheme": "dungeonbound",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": { "package": "com.dungeonbound.studentrpg", "allowBackup": false },
+    "plugins": [["expo-secure-store", { "configureAndroidBackup": true }]],
+    "experiments": { "tsconfigPaths": true }
+  }
+}

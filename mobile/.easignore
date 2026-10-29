@@ -1,0 +1,16 @@
+# Upload app source/assets, never local secrets or generated signing material.
+node_modules/
+.expo/
+.expo-shared/
+android/
+ios/
+dist/
+.checkpoints/
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+*.apk
+*.aab
+*.log
