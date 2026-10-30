@@ -1,13 +1,17 @@
-// Explicit local integration check: npm run test:integration (requires API and DB).
+// Explicit integration check: requires the target API and its matching database.
 import assert from 'node:assert/strict';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { pool } from '../src/db.js';
 import { digestToken } from '../src/validators.js';
+import { validateApiUrl } from '../../mobile/src/api-url.ts';
 
-const base = 'http://127.0.0.1:4000';
+const configured = process.env.API_BASE_URL || 'http://127.0.0.1:4000';
+const host = new URL(configured).hostname;
+const base = validateApiUrl(configured, !['localhost', '127.0.0.1', '[::1]'].includes(host));
 const emails = [];
 async function request(path, method = 'GET', body, token) {
   const response = await fetch(base + path, {
+    signal: AbortSignal.timeout(45000),
     method, headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
     ...(body ? { body: JSON.stringify(body) } : {}),
   });

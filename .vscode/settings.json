@@ -1,0 +1,10 @@
+{
+  "files.exclude": {
+    "**/.project-docs": true,
+    "**/.checkpoints": true
+  },
+  "search.exclude": {
+    "**/.project-docs/**": true,
+    "**/.checkpoints/**": true
+  }
+}

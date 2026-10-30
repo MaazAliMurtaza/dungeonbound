@@ -16,7 +16,8 @@
         {
           "configureAndroidBackup": true
         }
-      ]
+      ],
+      "./plugins/with-windows-native-paths.cjs"
     ],
     "experiments": {
       "tsconfigPaths": true

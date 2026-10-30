@@ -132,3 +132,18 @@ Deployment and evidence preparation:
 - Still blocked on user choice/approval: host/cost/private-source and EAS publishing, required Android SDK installer actions. Render/Neon account integrations remain unconnected. Physical phone still absent. Eight upstream dependency advisories remain unresolved. No EAS link, hosted API URL, production signing credentials or Git commit hash obtained.
 
 Current reviewed source checkpoint: C:\D\Final Year\7th Sem\MAD\Project\dungeonbound-codex-ready\dungeonbound-complete\.checkpoints\remaining-2026-10-29-214219. This is a local snapshot, not a Git commit. It excludes secrets, native signing output, dependency caches and APKs.
+
+## Approved installation and publishing — 2026-10-29
+
+User explicitly replied "all approved" to SDK installation and the Render/Neon/EAS/private-source plan with a $0 cap. This approval persists; account access is separate from approval.
+
+Executed so far in this turn:
+
+- Initialized local Git using the PC's existing configured author identity. Reviewed 60 staged source/evidence files and checked exclusions/known local JWT secret/private-key/token signatures before committing. Local .env files, native debug keys, caches and APKs are excluded.
+- GitHub connector has no repository-creation operation, so used the existing Git Credential Manager login in process memory after verifying it belonged to MaazAliMurtaza. No credential value was printed. Created and pushed private repository https://github.com/MaazAliMurtaza/dungeonbound; connector metadata confirmed visibility=private. Initial source commit: 968e4853fc7342f976dad484783ea35b1abb2f3c.
+- Created and linked EAS project https://expo.dev/accounts/maazay.py/projects/dungeonbound (project ID 9b17cdde-bfcc-4054-9499-363f940ca1d1) using the existing signed-in personal Expo account. No signing credentials or build job created. Updated app identity to com.maazay.dungeonbound; build helper now reads identity from app.json. Commit b1c10985d9fbae90b020116677db38fb348b56ae pushed for linkage/identity/approval metadata.
+- Downloaded official Windows Android command-line tools 23.0 from Google's repository and matched the published archive SHA-1. Latest sdkmanager redirects to the new Android CLI: old semicolon names and top-level package@version attempts skipped packages despite exit 0, so those attempts are NOT installation passes. New Android CLI uses SDK-style paths (build-tools/37.0.0, ndk/27.1.12297006, cmake/3.30.5).
+- Correct Android CLI install commands downloaded/extracted all three approved components. Metrics disabled for explicit new CLI calls. Existing accepted SDK license was present. `node scripts/build-android-local.mjs --check`: PASS, API 37/platform-tools plus Build Tools 37.0.0, NDK 27.1.12297006 and CMake 3.30.5 present.
+- `node scripts/build-android-local.mjs --install` is running: native prebuild succeeded, Gradle first native compilation/configuration still in progress. No APK or successful installation is claimed yet. Local API and Metro remain healthy; emulator-5554 is connected, no physical device.
+- Mobile 17 tests rerun PASS; server 3 tests rerun PASS; TypeScript rerun PASS after project identity/linkage. Expo dependency-check result pending collection.
+- Render and Neon integrations are still uninstalled/unconnected according to fresh discovery; their authenticated service tools are unavailable. Requested provider sign-in while continuing the local build. No Render/Neon resource, hosted health URL or EAS preview build exists yet. No paid action or external message sent.
