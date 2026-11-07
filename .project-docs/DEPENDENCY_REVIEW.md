@@ -1,3 +1,11 @@
+# Current review: 2026-11-07
+
+A compatible `npm audit fix --ignore-scripts` updated the mobile lockfile without changing the Expo SDK or forcing a downgrade. Before: 10 findings (1 low, 7 moderate, 2 high). After: 5 moderate findings, 0 high, 0 critical. The remaining chain is glob/minimatch through Expo CLI/fingerprint and Expo. npm proposes an incompatible Expo 53 downgrade with `--force`; it was not applied. Server audit: 0 findings. `react-native-safe-area-context` was added using Expo's SDK 58-compatible installer; the subsequent installation still reports 5 moderate findings.
+
+Mobile tests, typecheck and offline Expo compatibility validation pass after these dependency changes. The offline check warns that validation is less reliable without online metadata. No global package upgrade was performed.
+
+The dated notes below are historical and describe the earlier dependency state.
+
 # Dependency review — 2026-10-29
 
 `mobile/npm audit --json` was rerun: 8 advisories (5 low, 3 high). This is not a clean audit. The report includes affected parent packages as well as two underlying packages:

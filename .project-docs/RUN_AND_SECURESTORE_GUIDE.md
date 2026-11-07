@@ -1,3 +1,5 @@
+> Current game and lighter Android profile: see [ECLIPSE_PROTOCOL.md](ECLIPSE_PROTOCOL.md). For the expanded UI walkthrough use `node scripts/android-v2-smoke.mjs`; the native storage audit supports both old and new saves. The instructions below preserve the earlier demo setup.
+
 # Dungeonbound: run the app and demonstrate SecureStore
 
 Updated: 2026-10-30. These instructions use the existing source and Expo Go. APK building and cloud deployment remain paused; an installable standalone APK and hosted API are not claimed.

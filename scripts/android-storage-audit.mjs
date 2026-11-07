@@ -26,12 +26,12 @@ const expression = `(async () => {
   const refresh = await secure.getItemAsync('dungeonbound_refresh_v1');
   const keys = await cache.getAllKeys();
   const entries = await cache.multiGet(keys);
-  const progress = entries.filter(([key]) => key.startsWith('dungeonbound_progress_'));
+  const progress = entries.filter(([key]) => key.startsWith('dungeonbound_progress_') && !key.endsWith('_conflict'));
   return { available: true, accessPresent: !!access, refreshPresent: !!refresh,
     asyncStorageKeys: keys.length, progressEntries: progress.length,
     sensitiveKeyFound: keys.some(key => /token|password|jwt|credential/i.test(key)),
     sessionTokenFoundInAsyncStorage: entries.some(([,value]) => value && ((access && value.includes(access)) || (refresh && value.includes(refresh)))),
-    progressShapeValid: progress.every(([,value]) => { const data = JSON.parse(value); return Object.keys(data).sort().join(',') === 'progress,savedAt' && data.progress?.version === 1; }) };
+    progressShapeValid: progress.every(([,value]) => { const data = JSON.parse(value); return Object.keys(data).sort().join(',') === 'progress,savedAt' && [1, 2].includes(data.progress?.version); }) };
 })().then(value => { globalThis.__dungeonboundAudit = value; }, () => { globalThis.__dungeonboundAudit = { available: false }; })`;
 let sequence = 0;
 function evaluate(expression) { return new Promise((resolve, reject) => {

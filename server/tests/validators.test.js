@@ -13,5 +13,5 @@ test('hashing token does not store raw session secret', () => {
 });
 test('rejects malformed progress payload', () => {
   assert.equal(validProgress({ version: 1 }), false);
-  assert.equal(validProgress({ version: 1, hero: { className:'Warrior', hp: 10, maxHp: 100 }, rooms: Array(8).fill({}), roomIndex: 0, inventory:[], kills:0 }), true);
+  assert.equal(validProgress({ version: 1, hero: { className:'Warrior', hp: 10, maxHp: 100 }, rooms: Array(8).fill({}), roomIndex: 0, inventory:[], kills:0 }), false);
 });

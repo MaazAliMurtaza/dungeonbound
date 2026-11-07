@@ -14,6 +14,8 @@ const versions = readFileSync(path.join(mobile, 'node_modules/react-native/gradl
 const version = name => new RegExp(`^${name} = "([^"]+)"`, 'm').exec(versions)?.[1];
 const buildTools = version('buildTools'), ndk = version('ndkVersion'), api = version('compileSdk');
 const cmake = '3.30.5'; // React Native 0.88's ReactAndroid/build.gradle.kts default.
+const abis = (process.argv.find(arg => arg.startsWith('--abis='))?.slice(7) || 'x86_64').split(',');
+if (!abis.length || abis.some(abi => !['arm64-v8a','armeabi-v7a','x86_64'].includes(abi))) throw new Error('Unsupported Android ABI');
 const expoCmake = '3.22.1'; // Expo modules/core default CMake request in the actual build.
 const missing = [];
 for (const [label, item] of [
@@ -48,22 +50,22 @@ if (!process.argv.includes('--skip-prebuild')) {
   const activity = path.join(mobile, 'android/app/src/main/java', ...appId.split('.'), 'MainActivity.kt');
   if (!existsSync(manifest) || !existsSync(activity)) throw new Error('Matching generated native project missing; prebuild required');
 }
-const command = 'gradlew.bat :app:assembleDebug -PreactNativeDevServerPort=8082 -PreactNativeArchitectures=x86_64 -Pandroid.builder.sdkDownload=false -Pexpo.android.cmakeObjectPathMax=240 --max-workers=2';
+const command = `gradlew.bat :app:assembleDebug -PreactNativeDevServerPort=8082 -PreactNativeArchitectures=${abis.join(',')} -Pandroid.builder.sdkDownload=false -Pexpo.android.cmakeObjectPathMax=240 --max-workers=2${process.argv.includes('--offline') ? ' --offline' : ''}`;
 run('cmd.exe', ['/d', '/s', '/c', command], path.join(mobile, 'android'));
 const built = path.join(mobile, 'android/app/build/outputs/apk/debug/app-debug.apk');
 if (!existsSync(built)) throw new Error('Gradle did not produce the expected debug APK');
 const artifacts = path.join(root, 'artifacts'); mkdirSync(artifacts, { recursive: true });
-const destination = path.join(artifacts, 'dungeonbound-debug-x86_64.apk');
+const destination = path.join(artifacts, `dungeonbound-debug-${abis.join('-')}.apk`);
 copyFileSync(built, destination);
 writeFileSync(path.join(artifacts, 'debug-build.json'), JSON.stringify({
   kind: 'local debug APK; requires Metro on port 8082; not an EAS/release build',
-  package: appId, abi: 'x86_64', builtAt: new Date().toISOString(),
+  package: appId, abis, builtAt: new Date().toISOString(),
   sha256: createHash('sha256').update(readFileSync(destination)).digest('hex'),
 }, null, 2) + '\n');
-console.log('Debug APK saved to artifacts/dungeonbound-debug-x86_64.apk');
+console.log(`Debug APK saved to artifacts/${path.basename(destination)}`);
 if (process.argv.includes('--install')) {
   const adb = path.join(sdk, 'platform-tools/adb.exe');
-  run(adb, ['reverse', 'tcp:4000', 'tcp:4000']); run(adb, ['reverse', 'tcp:8082', 'tcp:8082']);
-  run(adb, ['install', '-r', destination]);
-  run(adb, ['shell', 'am', 'start', '-n', `${appId}/.MainActivity`]);
+  run(adb, ['-s','emulator-5554','reverse', 'tcp:4000', 'tcp:4000']); run(adb, ['-s','emulator-5554','reverse', 'tcp:8082', 'tcp:8082']);
+  run(adb, ['-s','emulator-5554','install', '-r', destination]);
+  run(adb, ['-s','emulator-5554','shell', 'am', 'start', '-n', `${appId}/.MainActivity`]);
 }

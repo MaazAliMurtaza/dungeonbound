@@ -1,3 +1,5 @@
+> Current proposal gaps and deliverables: [PROPOSAL_AUDIT_2026-11-07.md](PROPOSAL_AUDIT_2026-11-07.md), checked against the supplied Word documents. Latest test evidence: [PHONE_LAYOUT_2026-11-07.md](PHONE_LAYOUT_2026-11-07.md). Earlier checklists/counts below are historical.
+
 # First Codex assignment: Finish Dungeonbound end-to-end
 
 You are working **locally on the user's Windows computer** in the Dungeonbound source folder. Follow `AGENTS.md`.

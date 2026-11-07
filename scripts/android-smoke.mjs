@@ -1,3 +1,4 @@
+// Historical prototype runner. Current game: use android-v2-smoke.mjs.
 // Local emulator walkthrough. Credentials exist only in process memory.
 import { execFileSync, spawn } from 'node:child_process';
 import { randomBytes } from 'node:crypto';

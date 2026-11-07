@@ -1,0 +1,215 @@
+P1: PROJECT REPORT
+P2: Dungeonbound: A Lightweight Procedurally Generated Mobile RPG
+P3: Team MembersSyed Muhammad Rayyan – SE-23067Maaz Ali Murtaza – SE-23092Syed Ahmer Ali – SE-23099Course / Instructor: ___Ms. Tooba Siddiqui____Submission Date: ___10-10-26___________
+P4: Important: This report is based on the proposed project scope. Actual implementation status, test results, bug fixes, repository/build links and contribution percentages are not available yet, so editable placeholders are used instead of invented results.
+P6: 1. Application Overview
+P7: Dungeonbound is planned as a lightweight 2D, turn-based roguelite RPG for Android. Players select a character class, enter a procedurally generated dungeon, encounter enemies and events, fight turn-based battles, collect loot, improve equipment, gain experience and save progress. The project emphasizes gameplay systems and efficient resource use rather than demanding graphics, 3D environments or real-time multiplayer.
+P8: Core gameplay calculations are intended to run locally for responsiveness. A backend will handle account and persistent progression data.
+P9: 1.1 Technology Stack
+P10: Layer
+P11: Planned technology / purpose
+P12: Mobile
+P13: React Native + TypeScript; screens, navigation and game interface
+P14: Backend
+P15: Node.js + Express.js; authentication and REST API
+P16: Database
+P17: PostgreSQL; users, characters and persistent progress
+P18: Authentication
+P19: JWT-based authentication, if implemented
+P20: Tools
+P21: VS Code, Git/GitHub, Postman, Android Studio/emulator and Android device testing
+P22: Rendering
+P23: Lightweight React Native UI/2D assets; Skia only if required
+P24: 2. Team Members and Responsibilities
+P25: Member
+P26: Role
+P27: Responsibilities
+P28: Syed Muhannad Rayyan
+P29: Mobile / Frontend
+P30: React Native/TypeScript screens, navigation, character selection, combat/inventory/skill UI, API integration and mobile optimization.
+P31: Syed Ahmer Ali
+P32: Backend / Database
+P33: Node.js/Express API, PostgreSQL schema, authentication, persistence for characters/inventory/quests/achievements and API validation.
+P34: Maaz Ali Murtaza
+P35: Game Systems / QA
+P36: Combat engine, procedural dungeon generation, enemy AI, loot and skills, balancing, test cases, bug reproduction and verification.
+P38: All members are expected to participate in code review, Git collaboration, integration testing, documentation and the final demonstration.
+P39: 3. Features and Implementation Status
+P40: Update the status column to reflect the actual state at submission. The following is the intended scope, not a claim that every feature is complete.
+P41: Feature
+P42: Planned behavior / acceptance evidence
+P43: Actual status
+P44: Character classes
+P45: Warrior, Ranger and Mage with distinct statistics/skills.
+P46: To be updated
+P47: Procedural dungeons
+P48: Generate a valid start-to-boss route with varied room types.
+P49: To be updated
+P50: Turn-based combat
+P51: Attack, defend, skill/item actions, damage calculation and win/loss state.
+P52: To be updated
+P53: Enemy AI
+P54: Rule-based behavior for at least five enemy types and one boss.
+P55: To be updated
+P56: Inventory/equipment
+P57: Collect, view and equip items; equipment changes stats.
+P58: To be updated
+P59: Loot/rewards
+P60: Award XP, gold and randomized items after encounters.
+P61: To be updated
+P62: Progression/skills
+P63: XP, leveling, class skills and unlocks.
+P64: To be updated
+P65: Quests/achievements
+P66: Track objectives and award rewards/achievements.
+P67: To be updated
+P68: Persistence
+P69: Save/reload progress; accounts if authentication is completed.
+P70: To be updated
+P71: Leaderboard
+P72: Rankings by a defined score/progression metric.
+P73: Optional / update
+P75: 4. Testing and Quality Assurance
+P76: Type
+P77: Test case
+P78: Expected result
+P79: Actual result/status
+P80: Unit
+P81: Damage calculation with known attack/defense
+P82: Matches documented formula; no invalid values.
+P83: Not run / update
+P84: Unit
+P85: Critical hit chance/multiplier
+P86: Uses configured probability and multiplier.
+P87: Not run / update
+P88: Unit
+P89: Dungeon generation with multiple seeds
+P90: Every generated dungeon has a valid route to the boss.
+P91: Not run / update
+P92: Unit
+P93: Loot generation
+P94: Items follow configured type, rarity and stat rules.
+P95: Not run / update
+P96: Integration
+P97: Win battle and receive rewards
+P98: Combat result updates XP, gold and inventory consistently.
+P99: Not run / update
+P100: Integration
+P101: Save, close and reload progress
+P102: Saved character and progress are restored.
+P103: Not run / update
+P104: Integration
+P105: Mobile app calls backend
+P106: Valid calls succeed; invalid/unauthorized calls return errors.
+P107: Not run / update
+P108: System/device
+P109: Complete a dungeon on target Android
+P110: Core flow works without crashes and remains responsive.
+P111: Not run / update
+P112: Regression
+P113: Repeat a previously failing scenario
+P114: The fixed scenario passes.
+P115: Not run / update
+P116: 5. Problems Faced and Fixes
+P117: Problem/symptom
+P118: Root cause
+P119: Fix applied
+P120: Verification/status
+P121: [Actual issue]
+P122: [Cause]
+P123: [Code/configuration change]
+P124: [Test/evidence]
+P125: [Actual issue]
+P126: [Cause]
+P127: [Code/configuration change]
+P128: [Test/evidence]
+P129: [Actual issue]
+P130: [Cause]
+P131: [Code/configuration change]
+P132: [Test/evidence]
+P134: If encountered, useful topics to document include navigation/state bugs, API data mismatches, database connection errors, unreachable dungeon paths, incorrect turn order/damage, duplicate inventory items, save/load inconsistencies and device performance issues.
+P135: 6. Week 8–15 Timeline: Planned vs Actual
+P136: Week
+P137: Planned tasks
+P138: Assignee(s)
+P139: Actual completion/evidence
+P140: Status
+P141: 8
+P142: Requirements, user flow, architecture, Git repository, data models.
+P143: All; Rayyan UI flow, Ahmer schema, Maaz game design.
+P144: [Dates, work, commits/issues]
+P145: Update
+P146: 9
+P147: React Native setup, navigation, backend skeleton, database connection, character selection.
+P148: Rayyan, Ahmer
+P149: [Dates and evidence]
+P150: Update
+P151: 10
+P152: Combat engine, damage rules, turn handling and initial enemy behavior.
+P153: Maaz; Rayyan integrates UI
+P154: [Dates and evidence]
+P155: Update
+P156: 11
+P157: Dungeon generation, room types and encounter flow.
+P158: Maaz; Rayyan integrates screens
+P159: [Dates and evidence]
+P160: Update
+P161: 12
+P162: Inventory, equipment, loot, XP and leveling.
+P163: Maaz logic; Rayyan UI; Ahmer persistence
+P164: [Dates and evidence]
+P165: Update
+P166: 13
+P167: Authentication, save/load and mobile-backend integration.
+P168: Ahmer API/DB; Rayyan integration
+P169: [Dates and evidence]
+P170: Update
+P171: 14
+P172: Quests/achievements; unit, integration and device tests; bug fixes.
+P173: All; Maaz coordinates QA
+P174: [Test results and bug IDs]
+P175: Update
+P176: 15
+P177: Regression/performance tests, final APK, report, demo and contribution review.
+P178: All
+P179: [Build version and evidence]
+P180: Update
+P181: 7. What We Learned
+P182: Separating game rules from the UI makes combat and dungeon logic easier to test.
+P183: TypeScript interfaces help keep player, enemy, item and dungeon data consistent.
+P184: Small Git commits make integration problems easier to isolate.
+P185: Procedural generation needs validity checks, not just random room placement.
+P186: Local gameplay state and server-persisted state need clear ownership.
+P187: AI-assisted coding is most useful when tasks are specific and generated code is reviewed and tested.
+P188: 8. What Can Be Improved
+P189: Balance classes, enemies, skills and loot using play-test results.
+P190: Increase dungeon variety while preserving valid paths.
+P191: Improve accessibility, screen scaling and touch targets on smaller displays.
+P192: Measure memory use, launch time and responsiveness on representative devices.
+P193: Improve API validation, secret handling and authorization checks.
+P194: Expand automated tests and add regression cases for significant bugs.
+P195: Add leaderboard or cloud synchronization only after the core gameplay loop is stable.
+P196: 9. GitHub Repository and Build Deliverables
+P197: Deliverable
+P198: Link/details
+P199: GitHub repository
+P200: [repository URL]
+P201: Latest release / source commit
+P202: [release URL or commit hash]
+P203: Android APK/build
+P204: [APK or valid download/release URL]
+P205: Demo video, if required
+P206: [URL]
+P207: Test evidence
+P208: [Screenshots, test report, issue/PR links]
+P210: 10. Individual Contributions Breakdown
+P211: Member
+P212: Contribution evidence
+P213: Syed Muhammad Rayyan
+P214: [Screens, components, API integration, commits/tests]
+P215: Syed Ahmer Ali
+P216: [Backend endpoints, schema, authentication, commits/tests]
+P217: Maaz Ali Murtaza
+P218: [Game logic, generation, AI, test cases, bug fixes]
+P219: 11. Conclusion
+P220: Dungeonbound aims to demonstrate that an engaging RPG can be built around procedural generation, turn-based combat and progression without graphics-intensive rendering. The intended deliverable combines a lightweight React Native application with modular game logic and a backend for persistent data. The final report should describe only features actually completed and support claims with test results, bug-fix evidence, repository history and a working Android build.

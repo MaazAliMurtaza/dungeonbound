@@ -1,3 +1,5 @@
+> Current implementation: [proposal follow-up](PROPOSAL_IMPLEMENTATION_2026-11-07.md), including trees, accessories, Legendary items and speed. Scope baseline: [Word-document audit](PROPOSAL_AUDIT_2026-11-07.md). Earlier phone-layout evidence: [PHONE_LAYOUT_2026-11-07.md](PHONE_LAYOUT_2026-11-07.md). Older descriptions/checklists below are historical.
+
 # Dungeonbound — Android RPG + SecureStore + Express + PostgreSQL
 
 A runnable **source-code starter project** for the SE-458 Mobile App Development project. This archive has **not** been published to a cloud host and does **not** contain an APK. A backend, database, Expo account and user-owned deployment credentials are needed for a live release.

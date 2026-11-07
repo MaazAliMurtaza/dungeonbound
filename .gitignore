@@ -16,3 +16,14 @@ mobile/android/
 mobile/ios/
 *.keystore
 *.jks
+# Runtime process IDs, machine state and disposable output are not project evidence.
+artifacts/
+output/
+tmp/
+**/__pycache__/
+evidence/*-pid.txt
+evidence/*-processes.json
+evidence/*-setup.json
+evidence/*-restart-verified.json
+evidence/restarted-*.json
+evidence/proposal-short-build.json

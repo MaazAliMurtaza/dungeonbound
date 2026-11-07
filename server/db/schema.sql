@@ -21,3 +21,14 @@ CREATE TABLE IF NOT EXISTS saves (
 
 -- Idempotent alteration for databases created before client_updated_at was introduced.
 ALTER TABLE saves ADD COLUMN IF NOT EXISTS client_updated_at BIGINT NOT NULL DEFAULT 0;
+
+-- Public aliases are opt-in and never expose account emails.
+CREATE TABLE IF NOT EXISTS leaderboard (
+  user_id UUID PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  alias VARCHAR(24) NOT NULL,
+  score BIGINT NOT NULL DEFAULT 0,
+  level INTEGER NOT NULL,
+  bosses INTEGER NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_leaderboard_score ON leaderboard(score DESC, updated_at ASC);

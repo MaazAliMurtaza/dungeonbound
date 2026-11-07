@@ -1,3 +1,5 @@
+> Current requirements audit: [PROPOSAL_AUDIT_2026-11-07.md](PROPOSAL_AUDIT_2026-11-07.md), now verified against the supplied Word proposal and report. Latest phone work: [PHONE_LAYOUT_2026-11-07.md](PHONE_LAYOUT_2026-11-07.md). The body below is historical; its unavailable-document statements and old counts no longer describe the current project.
+
 # Dungeonbound — verified implementation supplement
 
 Verification date: 2026-10-29, Windows PC. This supplements the course report; no original Word/PDF university report was supplied in this workspace. It is not a fabricated development timeline or team contribution allocation. See `VERIFICATION_LOG.md` and `TEST_REPORT.md` for dated commands, failures and actual results.

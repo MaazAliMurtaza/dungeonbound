@@ -1,0 +1,173 @@
+P1: PROJECT PROPOSAL
+P2: Dungeonbound: A Lightweight Procedurally Generated Mobile RPG
+P3: Team MembersSyed Muhammad Rayyan – SE-23067Maaz Ali Murtaza – SE-23092Syed Ahmer Ali – SE-23099
+P4: 1. Introduction
+P5: Dungeonbound is a lightweight 2D mobile role-playing game (RPG) designed for Android devices, particularly low-to-medium-end devices. The game focuses on gameplay mechanics, procedural dungeon generation, strategic turn-based combat, character progression, and resource-efficient design rather than high-end graphics.
+P6: Players will explore dynamically generated dungeons containing combat encounters, treasure, events, and boss battles. As players progress, they will gain experience, acquire new equipment, unlock abilities, and improve their character.
+P7: The application will be developed using React Native with TypeScript. A Node.js backend with PostgreSQL will be used for user accounts, character progression, inventory persistence, quests, achievements, and leaderboards.
+P8: 2. Problem Statement
+P9: Many modern mobile RPGs rely heavily on high-resolution graphics, 3D environments, complex animations, and continuous resource consumption. Such games can require relatively powerful hardware and large amounts of storage and memory.
+P10: At the same time, simpler RPGs may lack procedural gameplay, meaningful character progression, or strategic combat mechanics.
+P11: Therefore, there is an opportunity to develop a lightweight mobile RPG that provides substantial gameplay depth while minimizing graphical and computational requirements.
+P12: Procedurally generated dungeons
+P13: Turn-based combat
+P14: Rule-based enemy AI
+P15: Character progression
+P16: Inventory and equipment systems
+P17: Randomized loot
+P18: Lightweight 2D presentation
+P21: 3. Proposed Solution
+P22: The proposed solution is a 2D turn-based roguelite RPG where players repeatedly explore procedurally generated dungeons. A typical gameplay cycle consists of login, character selection, dungeon generation, room exploration, combat/events/treasure, rewards, boss battles, progression, and saved progress.
+P23: The game will prioritize gameplay mechanics over graphical complexity, allowing it to run on low-to-medium-end Android devices.
+P24: 4. Objectives
+P25: Develop a lightweight RPG application for Android using React Native.
+P26: Implement procedural dungeon generation.
+P27: Develop a strategic turn-based combat system.
+P28: Implement rule-based enemy AI.
+P29: Provide character progression through XP, levels, skills, and equipment.
+P30: Implement an inventory and randomized loot system.
+P31: Provide persistent player progress through a backend database.
+P32: Optimize the application for low-to-medium-end mobile devices.
+P33: Provide an engaging RPG experience without requiring high-end graphics.
+P34: 5. Main Features
+P35: 5.1 Procedural Dungeon Generation
+P36: Instead of manually creating every dungeon, the application will generate dungeon layouts dynamically. Each dungeon can contain combat, treasure, event, elite enemy, and boss rooms. The generation algorithm will ensure that every dungeon contains a valid path from the starting point to the boss while introducing variation between runs.
+P37: This allows the game to provide many different dungeon experiences without requiring hundreds of manually designed levels.
+P38: 5.2 Turn-Based Combat and Enemy AI
+P39: Combat will be turn-based, allowing players to make strategic decisions. Players will be able to perform normal attacks, use special skills, defend, and use consumable items.
+P40: Enemies will use rule-based AI. For example, an enemy may defend when its health is critically low, use a strong attack when the player's health is low, or perform a normal attack otherwise. Different enemy types will have different behavior patterns.
+P41: 5.3 Character Progression and Skill System
+P42: Players will earn experience points from battles and quests. When enough XP is accumulated, the player will level up and improve their character.
+P44: The game will initially provide three classes:
+P45: Warrior — high health and defense.
+P46: Ranger — high speed and critical-hit probability.
+P47: Mage — lower physical defense but strong magical attacks.
+P48: Players will also be able to unlock skills through a simple skill tree, allowing different character builds and play styles.
+P49: 5.4 Inventory, Equipment and Loot System
+P50: Players will collect weapons, armor, accessories, consumables, and other items. Items will have different rarity levels such as Common, Rare, Epic, and Legendary.
+P51: Loot will be generated according to predefined probability rules, meaning that completing a dungeon can produce different rewards each time.
+P52: 5.5 Quest, Achievement and Persistent Progress System
+P53: Players will receive quests and earn rewards. The application will also provide achievements such as First Dungeon, 100 Enemies Defeated, Boss Slayer, Level 10, and Legendary Hunter.
+P54: Player progress will be stored in the backend so that progress is not lost when the application is closed. An optional leaderboard will allow players to compare their progress.
+P55: 6. Target Users
+P56: Mobile gamers
+P57: Casual RPG players
+P58: Players with low-to-medium-end Android devices
+P59: Users who enjoy strategy and progression-based games
+P60: Users who prefer shorter gameplay sessions
+P61: The game will be designed so that a dungeon run can be completed in relatively short sessions rather than requiring continuous gameplay.
+P62: 7. Technology Stack
+P63: Frontend/Mobile: React Native + TypeScript
+P64: Backend: Node.js + Express.js
+P65: Database: PostgreSQL
+P66: Authentication: JSON Web Tokens (JWT)
+P67: API communication: REST APIs
+P68: Development: Visual Studio Code, Git, GitHub, Postman
+P69: Potential rendering library: React Native Skia for lightweight 2D rendering, if required
+P70: Android development/testing: Android Studio and Android Emulator
+P71: 8. System Architecture
+P72: The proposed architecture consists of a React Native mobile application communicating with a Node.js/Express backend through REST APIs. PostgreSQL will store persistent application data.
+P73: Core gameplay calculations such as dungeon generation and combat can run locally to minimize network dependency and improve responsiveness. The backend will primarily handle authentication and persistent data such as characters, inventory, quests, achievements, and leaderboard information.
+P74: 9. Performance and Device Optimization
+P75: 2D sprites and lightweight visual assets
+P76: Low-resolution/compressed textures
+P77: Limited animations and particle effects
+P78: No 3D environments
+P79: Small dungeon maps
+P80: Turn-based combat
+P81: Limited active entities
+P82: Local game-state processing
+P83: Asset compression and lazy loading
+P84: Local caching
+P85: Limited background processing
+P86: Efficient API communication
+P87: The initial target is Android devices with approximately 3–4 GB RAM and entry-level to mid-range processors.
+P88: 10. Team Responsibilities
+P89: 10.1 Maaz — Frontend / React Native Developer
+P90: React Native application development
+P91: TypeScript implementation
+P92: Game user interface
+P93: Character screens
+P94: Combat interface
+P95: Inventory and equipment screens
+P96: Skill tree interface
+P97: API integration
+P98: Mobile optimization
+P99: 10.2 Ahmer — Backend / Database Developer
+P100: Node.js and Express backend
+P101: PostgreSQL database
+P102: Authentication
+P103: REST APIs
+P104: Player persistence
+P105: Inventory database
+P106: Quest system
+P107: Achievement system
+P108: Leaderboard
+P109: 10.3 Rayyan — Game Systems / QA Developer
+P110: Procedural dungeon generation
+P111: Combat engine
+P112: Enemy AI
+P113: Loot generation
+P114: Skill mechanics
+P115: Game balancing
+P116: Testing
+P117: Bug identification and fixing
+P118: Integration support
+P119: All three members will participate in Git/GitHub version control, integration, testing, and documentation.
+P120: 11. Functional Requirements
+P121: Allow users to create and authenticate accounts.
+P122: Allow users to create/select a character.
+P123: Generate dungeon layouts dynamically.
+P124: Generate different encounters within dungeon rooms.
+P125: Allow players to participate in turn-based combat.
+P126: Calculate damage, defense, critical hits, and status effects.
+P127: Provide different enemy behaviors.
+P128: Allow players to obtain and equip items.
+P129: Maintain player inventory.
+P130: Provide character leveling and XP.
+P131: Provide skills and skill progression.
+P132: Provide quests and rewards.
+P133: Store player progress.
+P134: Provide achievements.
+P135: Provide an optional leaderboard.
+P136: 12. Non-Functional Requirements
+P137: 12.1 Performance
+P138: The application should remain responsive on low-to-medium-end Android devices.
+P139: 12.2 Usability
+P140: The interface should be simple enough for new players to understand without extensive instructions.
+P141: 12.3 Reliability
+P142: Player progress should be persisted and recoverable.
+P143: 12.4 Scalability
+P144: The backend architecture should allow additional classes, items, enemies, dungeons, and quests to be added without redesigning the entire system.
+P145: 12.5 Maintainability
+P146: The project will use TypeScript and modular components to improve code maintainability.
+P147: 13. Expected Outcome
+P148: At the completion of the project, the team expects to deliver a functional Android RPG that allows users to create a character, select a class, enter dynamically generated dungeons, fight enemies, collect loot, upgrade equipment, gain experience, unlock abilities, complete quests, defeat bosses, save progress, and view achievements and rankings.
+P149: The final application should provide meaningful RPG gameplay while maintaining low resource consumption.
+P150: 14. Future Enhancements
+P151: Additional character classes
+P152: More dungeon environments
+P153: More advanced enemy AI
+P154: Daily challenges
+P155: Cloud synchronization
+P156: Multiplayer dungeon runs
+P157: Guild system
+P158: PvP battles
+P159: Procedurally generated quests
+P160: More sophisticated recommendation and balancing algorithms
+P161: These features will not be part of the initial MVP, allowing the team to focus on completing the core system within the project timeline.
+P162: 15. Project Scope / Minimum Viable Product (MVP)
+P163: 3 character classes
+P164: 8–10 enemy types
+P165: 5–10 dungeon floors
+P166: 15–20 item types
+P167: 10–15 skills
+P168: 10+ quests
+P169: Several boss encounters
+P170: Inventory and equipment system
+P171: XP and level system
+P172: Procedural dungeon generation
+P173: Persistent player accounts
+P174: The proposed MVP provides substantial gameplay and software-engineering depth while keeping the project scope realistic for a three-member semester project.
+P175: 16. Project Summary
+P176: Dungeonbound is a lightweight, procedurally generated 2D mobile RPG developed using React Native and TypeScript. The game focuses on strategic turn-based combat, procedural dungeon generation, rule-based enemy AI, character progression, equipment, randomized loot, quests, and persistent player progression. Unlike graphics-intensive RPGs, Dungeonbound will use a resource-efficient 2D design and lightweight game mechanics to support low-to-medium-end Android devices. A Node.js/Express backend and PostgreSQL database will manage authentication, player progression, inventory, quests, achievements, and leaderboard data.

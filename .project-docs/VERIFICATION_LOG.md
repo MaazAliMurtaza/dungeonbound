@@ -147,3 +147,14 @@ Executed so far in this turn:
 - `node scripts/build-android-local.mjs --install` is running: native prebuild succeeded, Gradle first native compilation/configuration still in progress. No APK or successful installation is claimed yet. Local API and Metro remain healthy; emulator-5554 is connected, no physical device.
 - Mobile 17 tests rerun PASS; server 3 tests rerun PASS; TypeScript rerun PASS after project identity/linkage. Expo dependency-check result pending collection.
 - Render and Neon integrations are still uninstalled/unconnected according to fresh discovery; their authenticated service tools are unavailable. Requested provider sign-in while continuing the local build. No Render/Neon resource, hosted health URL or EAS preview build exists yet. No paid action or external message sent.
+
+
+## Eclipse Protocol - 2026-11-07
+
+See VERIFICATION_2026-11-07.md for the expansion, final checks, Android profile change, failed attempts and current native results. This entry preserves the earlier log bytes.
+
+
+2026-11-07 phone-layout follow-up: see PHONE_LAYOUT_2026-11-07.md for bundled fonts, responsive portrait home, class/action sprites, visible armor and final native evidence. Mobile 35/35; server 4/4; TypeScript passed. Private Wi-Fi access supersedes the earlier localhost-only note.
+
+
+2026-11-07 Word-document review: read both supplied proposal/report DOCX files; extracted body/table text, compared requirements with current code and existing test evidence, and saved PROPOSAL_AUDIT_2026-11-07.md. Original document hashes unchanged. This was a source/document audit, not a new gameplay or physical-device test run.

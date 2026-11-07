@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { makeRooms, newGame, enterNextRoom, combatAction, equipItem, claimQuest, nextDungeon } from '../src/game.ts';
+import { makeRooms, newGame, enterNextRoom, combatAction, equipItem, claimQuest, nextDungeon, chooseRoomReward } from '../src/game.ts';
 
 test('every seed creates a connected start-to-boss path of 8 rooms', () => {
   for (let seed = 0; seed < 500; seed++) {
@@ -19,14 +19,14 @@ test('classes have distinct attributes', () => {
 test('combat never deals negative damage or negative HP', () => {
   let g = newGame('Warrior', 7);
   g = enterNextRoom(g);
-  while (!g.enemy) g = enterNextRoom(g);
+  while (!g.enemy) g = g.pendingChoice ? chooseRoomReward(g, g.pendingChoice === 'relic' ? 'ember' : 'safe') : enterNextRoom(g);
   for (let i = 0; i < 20 && g.enemy && g.hero.hp > 0; i++) g = combatAction(g, 'attack');
   assert.ok(g.hero.hp >= 0);
   assert.ok(!g.enemy || g.enemy.hp >= 0);
 });
 test('potion consumes one and restores at most maximum HP', () => {
   let g = newGame('Warrior', 8); g = enterNextRoom(g);
-  while (!g.enemy) g = enterNextRoom(g);
+  while (!g.enemy) g = g.pendingChoice ? chooseRoomReward(g, g.pendingChoice === 'relic' ? 'ember' : 'safe') : enterNextRoom(g);
   g.hero.hp = 20; g = combatAction(g, 'potion');
   assert.equal(g.hero.potions, 2);
   assert.ok(g.hero.hp <= g.hero.maxHp);
@@ -36,8 +36,8 @@ test('equipment and quest rewards work', () => {
   g.inventory.push({ id: 'one', name: 'Rare Blade', rarity: 'Rare', slot: 'weapon', bonus: 5 });
   g = equipItem(g, 'one'); assert.equal(g.equipment.weapon, 'one');
   g.kills = 3; g = claimQuest(g);
-  assert.equal(g.questClaimed, true); assert.equal(g.hero.gold, 30);
-  assert.equal(claimQuest(g).hero.gold, 30);
+  assert.equal(g.questClaimed, true); assert.equal(g.hero.gold, 80);
+  assert.equal(claimQuest(g).hero.gold, 80);
 });
 test('cleared dungeon unlocks new dungeon and restores stats', () => {
   let g = newGame('Warrior', 10); g.ended = true; g.dungeons = 1; g.hero.hp = 5;
@@ -49,7 +49,8 @@ test('a complete dungeon can be finished with each class over multiple seeds', (
     for (let seed = 1; seed <= 30; seed++) {
       let g = newGame(cls, seed), turns = 0;
       while (!g.ended && g.hero.hp > 0 && turns++ < 100) {
-        if (!g.enemy) g = enterNextRoom(g);
+        if (g.pendingChoice) g = chooseRoomReward(g, g.pendingChoice === 'relic' ? 'ember' : 'safe');
+        else if (!g.enemy) g = enterNextRoom(g);
         else if (g.hero.hp < g.hero.maxHp * .45 && g.hero.potions > 0) g = combatAction(g, 'potion');
         else g = combatAction(g, g.hero.mana >= 8 ? 'skill' : 'attack');
       }

@@ -9,7 +9,14 @@ const expoRequire = createRequire(mobileRequire.resolve('expo/package.json'));
 const cliRequire = createRequire(expoRequire.resolve('@expo/cli/package.json'));
 const { toQR } = cliRequire('toqr');
 const { PNG } = mobileRequire('pngjs');
-const url = 'exp://127.0.0.1:8082';
+const host = process.argv[2] || '127.0.0.1';
+const octets = host.split('.');
+if (octets.length !== 4 || octets.some(part => !/^\d{1,3}$/.test(part) || Number(part) > 255) ||
+  !(host === '127.0.0.1' || /^10\./.test(host) || /^192\.168\./.test(host) || /^172\.(1[6-9]|2\d|3[01])\./.test(host))) {
+  throw new Error('Use localhost or the PC private-network IPv4 address.');
+}
+const url = `exp://${host}:8082`;
+const filename = host === '127.0.0.1' ? 'phone-qr-usb.png' : 'phone-qr-wifi.png';
 const matrix = toQR(url), modules = Math.sqrt(matrix.length);
 if (!Number.isInteger(modules)) throw new Error('Invalid QR encoder result');
 const scale = 12, quiet = 4, side = (modules + quiet * 2) * scale;
@@ -21,5 +28,5 @@ for (let y = 0; y < side; y++) for (let x = 0; x < side; x++) {
   png.data[offset] = png.data[offset + 1] = png.data[offset + 2] = dark ? 0 : 255;
   png.data[offset + 3] = 255;
 }
-writeFileSync(path.join(root, 'phone-qr-usb.png'), PNG.sync.write(png));
-console.log(`Android USB QR saved: phone-qr-usb.png (${url})`);
+writeFileSync(path.join(root, filename), PNG.sync.write(png));
+console.log(`Phone QR saved: ${filename} (${url})`);

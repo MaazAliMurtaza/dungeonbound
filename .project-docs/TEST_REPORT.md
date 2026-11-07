@@ -1,3 +1,5 @@
+> Latest results: [PHONE_LAYOUT_2026-11-07.md](PHONE_LAYOUT_2026-11-07.md): 35 mobile tests, 4 backend tests, TypeScript and offline Expo compatibility pass. Earlier API/native evidence: [VERIFICATION_2026-11-07.md](VERIFICATION_2026-11-07.md), including 26 live API assertions. The [Word-document audit](PROPOSAL_AUDIT_2026-11-07.md) identifies outstanding QA acceptance evidence. Dated results below describe the earlier prototype.
+
 # Dungeonbound — Test evidence
 
 ## Local Windows verification — 2026-10-29
