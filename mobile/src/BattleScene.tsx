@@ -14,7 +14,7 @@ import RealmArt from "./RealmArt";
 import { FLOORS } from "./content";
 import { MotionContext } from "./motion";
 import HeroSprite from "./HeroSprite";
-import { actionPose, battlefieldActorSize, type HeroPose } from "./appearance";
+import { combatSequence, battlefieldActorSize, type HeroPose } from "./appearance";
 import { useWindowDimensions } from "react-native";
 import { SKILLS } from "./content";
 
@@ -185,14 +185,11 @@ export default function BattleScene({
       setPose("idle");
       return;
     }
-    setPose(actionPose(event.action, event.skillId));
-    const impactAt = cinematic ? 620 : 260,
-      resetAt = cinematic ? 970 : 430;
-    if (event.received > 0)
-      reactionTimers.current.push(setTimeout(() => setPose("hit"), impactAt));
-    reactionTimers.current.push(setTimeout(() => setPose("idle"), resetAt));
+    const sequence=combatSequence(event.action,event.skillId,game.hero.className,cinematic,!motion,event.received>0);
+    setPose(sequence[0].pose);
+    for(const frame of sequence.slice(1))reactionTimers.current.push(setTimeout(()=>setPose(frame.pose),frame.at));
     return () => reactionTimers.current.forEach(clearTimeout);
-  }, [event, cinematic]);
+  }, [event, cinematic, motion, game.hero.className]);
   useEffect(() => {
     if (!event) return;
     setFallen(event.defeated ? event.enemy : null);
@@ -416,7 +413,7 @@ export default function BattleScene({
               opacity: game.hero.hp <= 0 ? 0.5 : 1,
             }}
           >
-            <HeroSprite game={game} pose={pose} size={actorSize} />
+            <HeroSprite game={game} pose={pose} size={actorSize} swing={motion?effect:undefined} />
           </Animated.View>
           {effectVisible && event && (
             <Animated.View

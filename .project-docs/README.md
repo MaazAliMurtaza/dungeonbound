@@ -119,7 +119,7 @@ Local Windows testing on 2026-10-29 demonstrated Warrior, Ranger and Mage boss v
 
 ## 5 — Deployment: PostgreSQL and Express API
 
-Recommended school-project route: managed PostgreSQL (for example Neon or Render Postgres) + Render web service.
+Selected route: Supabase PostgreSQL + Render web service. This keeps the existing Express authentication and validated saves. See [SUPABASE_RENDER.md](../deploy/SUPABASE_RENDER.md).
 
 1. Create a managed PostgreSQL database. Copy its **private connection URL** (including host, username, password and any TLS settings).
 2. Push this project to a new GitHub repo; verify `.env` and `node_modules` files are **not tracked**.

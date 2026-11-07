@@ -1,0 +1,59 @@
+name: Build private Android preview
+on:
+  workflow_dispatch:
+    inputs:
+      api_url:
+        description: Actual hosted HTTPS API origin
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      EXPO_PUBLIC_API_URL: ${{ inputs.api_url }}
+      DUNGEONBOUND_RELEASE_BUILD: "1"
+      EXPO_OFFLINE: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.11.0"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: android-actions/setup-android@v3
+      - run: npm ci
+        working-directory: mobile
+      - name: Validate release origin and game
+        working-directory: mobile
+        run: |
+          node --experimental-strip-types --input-type=module -e 'import {validateApiUrl} from "./src/api-url.ts"; validateApiUrl(process.env.EXPO_PUBLIC_API_URL,true);'
+          npm run typecheck
+          npm test
+      - name: Install build components on the disposable runner
+        run: sdkmanager "platforms;android-37" "build-tools;37.0.0" "ndk;27.1.12297006" "cmake;3.30.5" "cmake;3.22.1"
+      - name: Generate native project
+        working-directory: mobile
+        run: npx expo prebuild --platform android --no-install
+      - name: Assemble standalone internal preview
+        working-directory: mobile/android
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:assembleRelease -PreactNativeArchitectures=arm64-v8a,x86_64 --max-workers=2 -Pandroid.builder.sdkDownload=false
+      - name: Record artifact checksum
+        run: |
+          mkdir -p release
+          cp mobile/android/app/build/outputs/apk/release/app-release.apk release/dungeonbound-preview.apk
+          sha256sum release/dungeonbound-preview.apk > release/SHA256SUMS.txt
+          printf '%s\n' "Commit: $GITHUB_SHA" "Internal preview signing; not a Play Store release." > release/BUILD.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dungeonbound-preview-${{ github.run_number }}
+          path: release/
+          retention-days: 7

@@ -38,12 +38,16 @@ import {
   sellItem,
   type Action,
   type HeroClass,
+  type Game,
 } from "./src/game";
 import { FLOORS, QUESTS, RELICS, SHOP, SKILLS } from "./src/content";
 import { MotionContext } from "./src/motion";
 import { useFonts } from "expo-font";
 import HeroSprite from "./src/HeroSprite";
+import WeaponSprite from "./src/WeaponSprite";
+import { weaponAppearance } from "./src/appearance";
 import SkillTree from "./src/SkillTree";
+import { SoundContext, useGameAudio } from "./src/audio";
 import { RARITY_COLORS } from "./src/items";
 import { effectiveSpeed, skillLockReason } from "./src/game";
 
@@ -193,12 +197,19 @@ export default function App() {
   const combatLock = useRef(false),
     scroll = useRef<React.ElementRef<typeof ScrollView>>(null),
     turn = useRef(0);
+  const audio = useGameAudio(g?.enemy ? (g.enemy.boss ? "guardian" : "battle") : "refuge", fontsLoaded || !!fontError);
   const floor = FLOORS[(g?.floor ?? 1) - 1],
     canTrade = !!g && !g.enemy && !g.pendingChoice && g.hero.hp > 0;
   function navigate(next: Screen) {
+    audio.play("ui");
     setScreen(next);
     setEvent(null);
     scroll.current?.scrollTo({ y: 0, animated: false });
+  }
+  function updateGame(next: Game) {
+    if(g && (next.purchases>g.purchases || next.claimedQuests.length>g.claimedQuests.length)) audio.play("gold");
+    if(g && next.hero.level>g.hero.level) audio.say(`Awakening complete. Level ${next.hero.level}.`);
+    a.update(next);
   }
   function start(cls: HeroClass) {
     const go = () => {
@@ -231,6 +242,9 @@ export default function App() {
       evaded: next.log[0]?.startsWith("SWIFT EVADE"),
       skillId,
     });
+    if(next.hero.hp<=0){audio.play("defeat");audio.say("Hunter down. Your next awakening awaits.");}
+    else if(!next.enemy && enemy.boss){audio.play("victory");audio.say(next.floor===6?"The tower is cleared. Rise, hunter.":"Gate cleared. A new path awaits.");}
+    else {audio.play(action==='defend'?"guard":action==='potion'||action==='ether'?"heal":action==='skill'||g.hero.className==='Mage'?"spell":g.hero.className==='Ranger'?"arrow":"slash");}
     if (haptics) Vibration.vibrate(next.enemy ? 12 : [0, 15, 40, 25]);
     setTimeout(
       () => {
@@ -290,6 +304,7 @@ export default function App() {
   if (a.user && g && (screen === "home" || screen === "dungeon")) {
     return (
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <SoundContext.Provider value={audio}>
         <MotionContext.Provider value={!performance}>
           <StatusBar barStyle="light-content" />
           <GameWorld
@@ -297,7 +312,7 @@ export default function App() {
             event={event}
             screen={screen}
             navigate={(next) => navigate(next as Screen)}
-            update={a.update}
+            update={updateGame}
             fight={fight}
             locked={locked}
             conflict={a.conflict}
@@ -310,13 +325,17 @@ export default function App() {
             setPerformance={setPerformance}
             haptics={haptics}
             setHaptics={setHaptics}
+            audioSettings={audio.settings}
+            configureAudio={audio.configure}
           />
         </MotionContext.Provider>
+        </SoundContext.Provider>
       </SafeAreaProvider>
     );
   }
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+      <SoundContext.Provider value={audio}>
       <MotionContext.Provider value={!performance}>
         <SafeAreaView style={s.safe}>
           <RealmArt index={a.user ? floor.art : 0} height={1400} shade={0.78} />
@@ -586,17 +605,15 @@ export default function App() {
                         ) : (
                           g.inventory.map((item) => {
                             const equipped = g.equipment[item.slot] === item.id,
-                              color = RARITY_COLORS[item.rarity];
+                              color = RARITY_COLORS[item.rarity],
+                              weapon = weaponAppearance({...g,equipment:{...g.equipment,weapon:item.id}});
                             return (
                               <View
                                 key={item.id}
                                 style={[s.itemCard, { borderLeftColor: color }]}
                               >
                                 <View style={s.row}>
-                                  <AbilityIcon
-                                    cell={item.slot === "weapon" ? 0 : item.slot === "armor" ? 1 : 13}
-                                    size={56}
-                                  />
+                                  {item.slot === "weapon" ? <WeaponSprite row={weapon.row} column={weapon.column} size={56} /> : <AbilityIcon cell={item.slot === "armor" ? 1 : 13} size={56} />}
                                   <View style={{ flex: 1 }}>
                                     <GameText style={[s.eyebrow, { color }]}>
                                       {item.rarity.toUpperCase()} /{" "}
@@ -617,7 +634,7 @@ export default function App() {
                                   secondary={equipped}
                                   disabled={equipped || !!g.enemy || a.conflict}
                                   onPress={() =>
-                                    a.update(equipItem(g, item.id))
+                                    updateGame(equipItem(g, item.id))
                                   }
                                 />
                                 {!equipped && (
@@ -626,7 +643,7 @@ export default function App() {
                                     label={`SELL · ${Math.max(5, item.bonus * 4)} GOLD`}
                                     disabled={!!g.enemy || a.conflict}
                                     onPress={() =>
-                                      a.update(sellItem(g, item.id))
+                                      updateGame(sellItem(g, item.id))
                                     }
                                   />
                                 )}
@@ -649,7 +666,7 @@ export default function App() {
                       </>
                     )}
                     {screen === "skills" && (
-                      <SkillTree game={g} locked={!canTrade || a.conflict} update={a.update} />
+                      <SkillTree game={g} locked={!canTrade || a.conflict} update={updateGame} />
                     )}
                     {screen === "shop" && (
                       <>
@@ -720,7 +737,7 @@ export default function App() {
                                     h!.level < (item.level ?? 1) ||
                                     a.conflict
                                   }
-                                  onPress={() => a.update(buyItem(g, item.id))}
+                                  onPress={() => updateGame(buyItem(g, item.id))}
                                 />
                                 {item.level && <Label>Requires level {item.level}</Label>}
                               </View>
@@ -749,7 +766,7 @@ export default function App() {
                                     h!.gold < sk.price ||
                                     a.conflict
                                   }
-                                  onPress={() => a.update(buyItem(g, sk.id))}
+                                  onPress={() => updateGame(buyItem(g, sk.id))}
                                 />
                                 {!g.skills.includes(sk.id) && <Label>{skillLockReason(g, sk.id) ?? "Ready to learn"}</Label>}
                               </Card>
@@ -805,7 +822,7 @@ export default function App() {
                                 disabled={
                                   done || value < q.target || a.conflict
                                 }
-                                onPress={() => a.update(claimQuest(g, q.id))}
+                                onPress={() => updateGame(claimQuest(g, q.id))}
                               />
                             </Card>
                           );
@@ -942,6 +959,7 @@ export default function App() {
           )}
         </SafeAreaView>
       </MotionContext.Provider>
+      </SoundContext.Provider>
     </SafeAreaProvider>
   );
 }

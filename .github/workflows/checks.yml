@@ -1,0 +1,55 @@
+name: Validate game and API
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: dungeonbound_ci
+          POSTGRES_USER: dungeonbound
+          POSTGRES_PASSWORD: ci_only_password
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U dungeonbound -d dungeonbound_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://dungeonbound:ci_only_password@127.0.0.1:5432/dungeonbound_ci
+      DATABASE_SCHEMA: dungeonbound_ci
+      EXPO_PUBLIC_API_URL: http://127.0.0.1:4000
+      EXPO_OFFLINE: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.11.0"
+      - run: npm ci
+        working-directory: mobile
+      - run: npm ci
+        working-directory: server
+      - run: npm run typecheck && npm test && npm run doctor
+        working-directory: mobile
+      - run: npm test && npm run db:migrate
+        working-directory: server
+      - name: Start API with a disposable test secret
+        shell: bash
+        run: |
+          task_secret=$(openssl rand -hex 48)
+          echo "::add-mask::$task_secret"
+          JWT_SECRET="$task_secret" node server/src/server.js > /tmp/dungeonbound-api.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4000/health; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/dungeonbound-api.log
+          exit 1
+      - run: npm run test:integration
+        working-directory: server

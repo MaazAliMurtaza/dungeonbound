@@ -24,10 +24,18 @@ export function armorAppearance(game: Game): {
   );
   if (!armor) return { row: 0, tier: "Starter", name: "Starter outfit" };
   return {
-    row: Math.min(3, ARMOR_TIERS.indexOf(armor.rarity)),
+    row: ARMOR_TIERS.indexOf(armor.rarity),
     tier: armor.rarity,
     name: armor.name,
   };
+}
+
+export function weaponAppearance(game: Game) {
+  const item = game.inventory.find((entry) => entry.slot === "weapon" && entry.id === game.equipment.weapon);
+  const column = item?.name === "Dawnsunder" ? 3 : item?.name === "Eclipse Edge" ? 2 : item?.name === "Riftforged Weapon" ? 1 :
+    item?.rarity === "Legendary" ? 3 : item?.rarity === "Epic" ? 2 : item?.rarity === "Rare" ? 1 : 0;
+  return { row: ["Warrior","Ranger","Mage"].indexOf(game.hero.className), column,
+    name: item?.name ?? (game.hero.className === "Warrior" ? "Steel sword" : game.hero.className === "Ranger" ? "Wooden recurve" : "Wooden staff") };
 }
 
 export function actionPose(action: Action, skillId?: string): HeroPose {
@@ -44,6 +52,20 @@ export function actionPose(action: Action, skillId?: string): HeroPose {
   if (["w-stun", "r-stun", "m-heal", "m-stun"].includes(skillId ?? ""))
     return "ritual";
   return "power";
+}
+
+export function combatSequence(action: Action, skillId: string | undefined, className: string,
+  cinematic: boolean, reduced: boolean, received: boolean): {at:number;pose:HeroPose}[] {
+  const selected=actionPose(action,skillId),impact=cinematic?620:260,reset=cinematic?970:430;
+  const sequence:{at:number;pose:HeroPose}[]=[{at:0,pose:selected}];
+  if(!reduced&&(action==="attack"||action==="skill")){
+    sequence[0].pose=className==="Warrior"?"guard":className==="Ranger"?"power":"ritual";
+    sequence.push({at:cinematic?160:70,pose:selected});
+    if(className==="Warrior"&&action==="attack")sequence.push({at:cinematic?340:150,pose:"pierce"});
+  }
+  if(received)sequence.push({at:impact,pose:"hit"});
+  sequence.push({at:reset,pose:"idle"});
+  return sequence;
 }
 
 export function homeLayout(width: number, stageHeight: number) {

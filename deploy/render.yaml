@@ -1,5 +1,4 @@
-# DRAFT: no resources have been created. Requires explicit publishing approval.
-# Select this file as the Blueprint path after approving a private source repo.
+# Free API + Supabase PostgreSQL. No resource is created by this file alone.
 services:
   - type: web
     name: dungeonbound-api
@@ -21,3 +20,5 @@ services:
         generateValue: true
       - key: DATABASE_URL
         sync: false
+      - key: DATABASE_SCHEMA
+        value: dungeonbound

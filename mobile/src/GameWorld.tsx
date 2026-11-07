@@ -46,6 +46,8 @@ type Props = {
   setPerformance: (v: boolean) => void;
   haptics: boolean;
   setHaptics: (v: boolean) => void;
+  audioSettings: {music:boolean;sound:boolean;voice:boolean};
+  configureAudio: (key:"music"|"sound"|"voice", value:boolean) => void;
 };
 const gold = "#D9BB7B",
   paper = "#F2E4C8",
@@ -668,6 +670,12 @@ export default function GameWorld(p: Props) {
                     <GameText style={s.storyLine}>Combat haptics</GameText>
                     <Switch value={p.haptics} onValueChange={p.setHaptics} />
                   </View>
+                  {([['music','Music'],['sound','Sound effects'],['voice','Voice announcements']] as const).map(([key,label])=>(
+                    <View style={s.spread} key={key}>
+                      <GameText style={s.storyLine}>{label}</GameText>
+                      <Switch accessibilityLabel={label} value={p.audioSettings[key]} onValueChange={value=>p.configureAudio(key,value)} />
+                    </View>
+                  ))}
                   <GameText style={s.fine}>
                     A new awakening replaces the current hunter.
                   </GameText>

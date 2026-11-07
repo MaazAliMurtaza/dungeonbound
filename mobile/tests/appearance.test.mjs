@@ -8,6 +8,8 @@ import {
   battlefieldActorSize,
   homeLayout,
   HERO_POSES,
+  weaponAppearance,
+  combatSequence,
 } from "../src/appearance.ts";
 
 test("five illustrated skills stay inside the command deck on narrow phones", () => {
@@ -22,6 +24,30 @@ test("five illustrated skills stay inside the command deck on narrow phones", ()
     }
 });
 import { SKILLS } from "../src/content.ts";
+
+test("weapons and armor select independent class models including a dedicated Legendary tier",()=>{
+  for(const cls of ['Warrior','Ranger','Mage']){
+    let g=newGame(cls,1);
+    g.inventory.push({id:'armor',name:'Sunplate',slot:'armor',rarity:'Legendary',bonus:18});
+    g=equipItem(g,'armor');assert.equal(armorAppearance(g).row,4);
+    for(const [column,name] of ['Starter find','Riftforged Weapon','Eclipse Edge','Dawnsunder'].entries()){
+      g.inventory.push({id:'weapon-'+column,name,slot:'weapon',rarity:'Common',bonus:3});
+      g=equipItem(g,'weapon-'+column);
+      assert.equal(weaponAppearance(g).column,column);
+      assert.equal(armorAppearance(g).tier,'Legendary');
+    }
+  }
+});
+test("combat sequences wind up before impact and settle within the input lock; reduced motion skips anticipation",()=>{
+  for(const cinematic of [false,true])for(const cls of ['Warrior','Ranger','Mage']){
+    const frames=combatSequence('attack',undefined,cls,cinematic,false,true);
+    assert.ok(frames.length>=4&&frames.length<=5);
+    assert.equal(frames.at(-1).pose,'idle');
+    assert.ok(frames.at(-1).at<(cinematic?1050:450));
+    assert.ok(frames.find(f=>f.pose==='attack').at<frames.find(f=>f.pose==='hit').at);
+    assert.deepEqual(combatSequence('attack',undefined,cls,cinematic,true,false).map(f=>f.pose),['attack','idle']);
+  }
+});
 
 test("equipped armor drives distinct starter/Common/Rare/Epic models for every class", () => {
   for (const cls of ["Warrior", "Ranger", "Mage"]) {
