@@ -4,7 +4,7 @@ Built-in imagegen mode was used for the following final raster assets. Existing 
 
 The Mage Legendary v1 is a retained source iteration whose alpha background failed inspection. Runtime uses v2, a fresh generation with transparent margins. No Python/image manipulation was used to remove raster backgrounds.
 
-HeroSprite anchors weapon layers at pose-specific grips and uses native transforms. Combat sequences include anticipation, strike, Warrior follow-through, hit reaction and recovery, with reduced-motion alternatives. This is a timed pose sequence, not a frame-by-frame walking-animation set.
+HeroSprite anchors weapon layers at pose-specific hand grips, compensates for each weapon column's uneven silhouette position, and uses native transforms. Combat sequences include anticipation, strike, Warrior follow-through, hit reaction and recovery, with reduced-motion alternatives. This is a timed pose sequence, not a frame-by-frame walking-animation set.
 
 ## Original audio
 

@@ -38,7 +38,9 @@ export default function HeroSprite({game,className=game?.hero.className??"Warrio
   const [x,y]=(special?legendaryGrips:grips)[className][index];
   const gx=(size-w)/2+x*w,gy=size-h+y*h;
   const weaponSize=size*(className==="Warrior"?.46:className==="Ranger"?.65:pose==="pierce"?.5:.73);
-  const anchorY=className==="Warrior"?.83:className==="Ranger"?.5:.67;
+  // Atlas silhouettes have different horizontal grips inside their grid cells.
+  const anchorX=(className==="Ranger"?[.54,.48,.35,.30]:[.62,.55,.46,.37])[weapon.column];
+  const anchorY=className==="Warrior"?.78:className==="Ranger"?.5:.67;
   const angles=className==="Warrior"?[145,100,-35,95,180,40,145,140]:className==="Ranger"?[0,0,-25,0,60,-15,0,30]:[0,75,0,35,0,65,0,-25];
   const angle=angles[index];
   const rotation=swing&&pose!=="idle"&&pose!=="hit"?swing.interpolate({inputRange:[0,.18,.4,.75,1],outputRange:[(angle-25)+"deg",angle+"deg",(angle+12)+"deg",angle+"deg",angle+"deg"]}):angle+"deg";
@@ -51,7 +53,7 @@ export default function HeroSprite({game,className=game?.hero.className??"Warrio
     </View>
     {showWeapon&&<View pointerEvents="none" style={{position:"absolute",left:gx,top:gy,width:0,height:0}}>
       <Animated.View style={{width:0,height:0,transform:[{rotate:rotation}]}}>
-        <View style={{position:"absolute",left:-weaponSize*.5,top:-weaponSize*anchorY}}>
+        <View style={{position:"absolute",left:-weaponSize*anchorX,top:-weaponSize*anchorY}}>
           <WeaponSprite row={weapon.row} column={weapon.column} size={weaponSize} />
         </View>
       </Animated.View>

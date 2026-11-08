@@ -1,0 +1,6 @@
+PASS: Warrior starter/Legendary and separate Dawnsunder weapon through native equip controls
+PASS: Ranger starter/Legendary and separate Dawnsunder weapon through native equip controls
+PASS: Mage starter/Legendary and separate Dawnsunder weapon through native equip controls
+PASS: native compact viewport with enlarged text
+PASS: native large-tall viewport with enlarged text
+PASS: visual fixture logout

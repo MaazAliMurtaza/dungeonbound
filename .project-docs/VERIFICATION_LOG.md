@@ -158,3 +158,6 @@ See VERIFICATION_2026-11-07.md for the expansion, final checks, Android profile 
 
 
 2026-11-07 Word-document review: read both supplied proposal/report DOCX files; extracted body/table text, compared requirements with current code and existing test evidence, and saved PROPOSAL_AUDIT_2026-11-07.md. Original document hashes unchanged. This was a source/document audit, not a new gameplay or physical-device test run.
+
+
+2026-11-08 deployment continuation: see DEPLOYMENT_VERIFICATION_2026-11-07.md and CLOUD_DEPLOYMENT_HANDOFF.md. Native eight-room guardian walkthrough and final all-class equipment/compact-tall visual checks passed. Current mobile 48, backend 10; TypeScript passed. Word report roles verified; original unchanged. Hosted API/APK still pending actual provider access.

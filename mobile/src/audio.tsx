@@ -20,6 +20,7 @@ export function useGameAudio(scene:keyof typeof tracks, ready:boolean) {
   const fx1 = useAudioPlayer(null,{updateInterval:1000});
   const fx2 = useAudioPlayer(null,{updateInterval:1000});
   const nextFx = useRef(0);
+  const voiceStarted = useRef(false);
   useEffect(()=>{
     let mounted=true;
     void AsyncStorage.getItem(storageKey).then(raw=>{
@@ -28,23 +29,23 @@ export function useGameAudio(scene:keyof typeof tracks, ready:boolean) {
     }).catch(()=>{}).finally(()=>{if(mounted)setLoaded(true);});
     void setAudioModeAsync({playsInSilentMode:false,interruptionMode:"mixWithOthers",allowsRecording:false,shouldPlayInBackground:false}).catch(()=>{});
     const listener=AppState.addEventListener("change",state=>setActive(state==='active'));
-    return()=>{mounted=false;listener.remove();void Speech.stop();};
+    return()=>{mounted=false;listener.remove();if(voiceStarted.current)void Speech.stop();};
   },[]);
   useEffect(()=>{if(loaded)void AsyncStorage.setItem(storageKey,JSON.stringify(settings)).catch(()=>{});},[settings,loaded]);
   useEffect(()=>{
-    try{music.replace(tracks[scene]);music.loop=true;music.volume=.22;}catch{}
-  },[scene,music]);
+    try{music.replace(ready&&loaded&&settings.music?tracks[scene]:null);music.loop=true;music.volume=.22;}catch{}
+  },[scene,music,ready,loaded,settings.music]);
   useEffect(()=>{
     try{if(ready&&loaded&&active&&settings.music)music.play();else music.pause();}catch{}
     if(!active||!settings.sound){try{fx1.pause();fx2.pause();}catch{}}
-    if(!active||!settings.voice)void Speech.stop();
+    if((!active||!settings.voice)&&voiceStarted.current){void Speech.stop();voiceStarted.current=false;}
   },[ready,loaded,active,settings,music,fx1,fx2,scene]);
   const play=useCallback((cue:SoundCue)=>{
     if(!ready||!active||!loaded||!settings.sound||AppState.currentState!=='active')return;
     try{const player=nextFx.current++%2?fx1:fx2;player.replace(cues[cue]);player.volume=cue==='ui'?.3:.55;player.play();}catch{}
   },[ready,active,loaded,settings.sound,fx1,fx2]);
   const say=useCallback((text:string)=>{
-    if(ready&&active&&settings.voice&&AppState.currentState==='active'){void Speech.stop();Speech.speak(text,{language:'en',rate:.92,onError:()=>{}});}
+    if(ready&&active&&settings.voice&&AppState.currentState==='active'){if(voiceStarted.current)void Speech.stop();voiceStarted.current=true;Speech.speak(text,{language:'en',rate:.92,onError:()=>{}});}
   },[ready,active,settings.voice]);
   function configure(key:keyof AudioSettings,value:boolean){setSettings(previous=>({...previous,[key]:value}));}
   return {play,say,settings,configure};

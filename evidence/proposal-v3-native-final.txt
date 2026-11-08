@@ -1,0 +1,9 @@
+PASS: new native account writes version-three save
+CHECK: reopening the legacy fixture through normal hydration
+PASS: native v2 cloud migration preserves gear, level and gold
+PASS: native prerequisite learning and paid mastery switch
+PASS: native accessory and Legendary purchases
+PASS: native accessory/Legendary equip and visible Legendary appearance
+PASS: session restart restores new equipment and mastery
+PASS: native eight-room guardian clear and First Dungeon achievement
+PASS: native fixture logout

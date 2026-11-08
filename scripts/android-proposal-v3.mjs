@@ -41,6 +41,11 @@ async function open(){
   shell('am','force-stop','host.exp.exponent');shell('am','start','-a','android.intent.action.VIEW','-d',`exp://${origin}?__expo_disable_onboarding=1`,'host.exp.exponent');await pause(6500);
 }
 async function saved(){return(await pool.query('SELECT saves.progress,saves.client_updated_at FROM saves JOIN users ON users.id=saves.user_id WHERE users.email=$1',[email])).rows[0];}
+async function advance(label){
+  const before=await saved();await tap(label);
+  for(let i=0;i<120;i++){const row=await saved();if(Number(row.client_updated_at)>Number(before.client_updated_at))return;await pause(500);}
+  throw new Error('Native action did not reach cloud save: '+label);
+}
 async function waitSave(predicate){for(let i=0;i<120;i++){const row=await saved();if(row&&predicate(row.progress))return row;await pause(500);}throw new Error('Expected native save did not arrive');}
 function assertHome(list){
   assert.ok(!list.some(n=>/ECLIPSE\s*PROTOCOL/i.test(n.text??'')),'Old branding is absent');
@@ -101,12 +106,12 @@ try {
   for(let turn=0;turn<90;turn++) {
     g=(await saved()).progress;assert.ok(g.hero.hp>0);
     if(g.ended)break;
-    if(g.pendingChoice){await tap(g.pendingChoice==='relic'?"\u2668 Ember Heart \u00b7 +4 attack.":'HELP THE HUNTER \u00b7 +1 flask, +15 XP');continue;}
-    if(!g.enemy){await tap(g.roomIndex<0?'ENTER DUNGEON':'NEXT ROOM');continue;}
+    if(g.pendingChoice){await advance(g.pendingChoice==='relic'?"\u2668 Ember Heart \u00b7 +4 attack.":'HELP THE HUNTER \u00b7 +1 flask, +15 XP');continue;}
+    if(!g.enemy){await advance(g.roomIndex<0?'ENTER DUNGEON':'NEXT ROOM');continue;}
     if(!photographed){shot('proposal-v3-battle.png');photographed=true;}
-    if(!guarded){await tap('\u25c8 DEFEND');guarded=true;}
-    else if(g.hero.mana>=8)await tap('\u2694 Rift Cleave\n8 MP');
-    else await tap('\u2694 ATTACK');
+    if(!guarded){await advance('\u25c8 DEFEND');guarded=true;}
+    else if(g.hero.mana>=8)await advance('\u2694 Rift Cleave\n8 MP');
+    else await advance('\u2694 ATTACK');
   }
   g=(await saved()).progress;assert.ok(g.ended&&g.bosses===1);assert.ok(g.achievements.includes('First Dungeon'));
   shot('proposal-v3-victory.png');console.log('PASS: native eight-room guardian clear and First Dungeon achievement');

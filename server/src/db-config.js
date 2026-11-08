@@ -9,7 +9,9 @@ export function databaseConfig(env) {
   const local = ['localhost','127.0.0.1','[::1]'].includes(url.hostname);
   const ssl = env.NODE_ENV === 'production' || !local;
   // URL SSL/options parameters must not replace verified TLS or our search path.
-  for (const key of ['sslmode','sslcert','sslkey','sslrootcert','options']) url.searchParams.delete(key);
+  for (const key of [...url.searchParams.keys()]) {
+    if (key.startsWith('ssl') || key === 'uselibpqcompat' || key === 'options') url.searchParams.delete(key);
+  }
   return {
     schema,
     config: { connectionString:url.toString(), max:8, idleTimeoutMillis:15000, connectionTimeoutMillis:10000,
