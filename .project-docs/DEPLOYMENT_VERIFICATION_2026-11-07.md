@@ -4,6 +4,7 @@
 
 - GitHub Linux CI for source b5b184e: https://github.com/MaazAliMurtaza/dungeonbound/actions/runs/42399693620. Mobile 48/48, backend 9/9, TypeScript, offline Expo compatibility, fresh PostgreSQL 17 private-schema migration and authenticated API integration passed.
 - Final local backend suite: 10/10 passed after stripping URL ssl/sslnegotiation/libpq overrides; the new regression inspects the actual pg.Client resolved TLS/search-path configuration. The earlier cloud baseline had nine backend tests.
+- Final source f52e68d passed Linux CI too: https://github.com/MaazAliMurtaza/dungeonbound/actions/runs/42441632543. All 48 mobile/10 backend tests, TypeScript/Expo compatibility, migration and live authenticated API integration succeeded. This is a verification run, not an APK build.
 - Local TypeScript passed again after the final audio loading/speech optimization and per-column weapon grip correction.
 - Android build/checks workflows and Render blueprint parsed successfully with the installed js-yaml parser. The first parser lookup used an unavailable yaml package; js-yaml was already installed, so no package was installed for this check.
 - Home-network API /health returned status ok and saveVersion 3 at 192.168.1.7:4000. The native app boots from the actual Windows Metro server on port 8082 after the multipart-response workaround.
@@ -19,7 +20,7 @@ Interrupted attempts included transient missing accessibility roots and a test r
 
 ## Build and hosting status
 
-No hosted Render/Supabase resource or completed standalone APK is claimed. Both provider plugins are installed and the owner explicitly mentioned them, but this session exposes no provider management commands. CLOUD_DEPLOYMENT_HANDOFF.md records the exact remaining deployment steps. The Android workflow requires a genuine public HTTPS API URL and retains a successful preview in the private repository's release assets. It has not been run against a fabricated or local origin.
+No hosted Render/Supabase resource or completed standalone APK is claimed. Both provider plugins and skills are installed, but this session exposes no provider management commands. Official MCP connections dungeonbound-render and dungeonbound-supabase were added through Codex CLI and browser OAuth started; completion is pending. Render rejected default dynamic registration, so the setup was corrected to the official documented OAuth client ID codex. CLOUD_DEPLOYMENT_HANDOFF.md records the remaining deployment steps. The Android workflow requires a genuine public HTTPS API URL and retains a successful preview in the private repository's release assets. It has not been run against a fabricated or local origin.
 
 Earlier Windows builds failed on unavailable offline dependencies, Windows path length and finally disk exhaustion. Their logs remain archived. The task-created TEMP/db3-v4px6aik directory was verified and removed, recovering 1.22 GB. Project files, original documents, dependency trees and shared SDKs remain in place under the owner's latest storage instruction.
 

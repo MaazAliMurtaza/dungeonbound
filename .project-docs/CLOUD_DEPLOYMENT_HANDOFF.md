@@ -9,11 +9,13 @@
 
 ## Connection state
 
-The owner connected both Render and Supabase and sent explicit plugin mentions. Plugin search confirms both installed. This running session still exposes no Render/Supabase management commands in its available tool registry (only GitHub/Sites and general tools). Do not ask the owner to reconnect again or claim provider resources were deployed. A fresh session may be needed to hydrate the provider toolset; verify actual available commands first.
+The owner installed Render and Supabase and sent explicit plugin mentions. Their skills subsequently loaded, but the running tool registry still exposes no provider management commands. Official MCP connections were therefore added through the installed Codex CLI: dungeonbound-render at https://mcp.render.com/mcp (documented OAuth client ID codex) and dungeonbound-supabase at https://mcp.supabase.com/mcp. Both browser OAuth flows were started and await completion; credentials belong in the client's secure credential store, never this repository. Do not reinstall plugins or ask for pasted tokens. Check actual authentication/tool availability first after the owner completes the browser pages; a reload may be needed to hydrate tools. No provider resource has been created.
 
 ## Current work
 
 Source/report checkpoint fe2e518 and optional-art/audio/cloud-workflow checkpoint b5b184e were pushed. Cloud validation for b5b184e succeeded: https://github.com/MaazAliMurtaza/dungeonbound/actions/runs/42399693620 (48 mobile tests, 9 backend tests, TypeScript, migration and live API checks). Read the current remote head for subsequent small fixes/evidence commits.
+
+Final implementation and native evidence are pushed in f52e68d276c674e7c913f1b72c92d02bb9048b4a. Its Linux CI also passed: https://github.com/MaazAliMurtaza/dungeonbound/actions/runs/42441632543 (48 mobile, 10 backend, TypeScript, Expo compatibility, fresh private-schema migration, live API integration). The additional backend regression checks pg.Client's resolved TLS/search path against all supported URL override forms. Final all-class Legendary/weapon grip and compact/tall enlarged-text visual checks passed. Subsequent commits update documentation/report only.
 
 The optional polish adds separate held-weapon layers, unique Legendary class outfits, timed anticipation/strike/follow-through/hit/recovery poses, original procedural music/effects and optional synthesized voice announcements. Asset prompts and modes: mobile/assets/ARTWORK-v4.md. No human voice cast is claimed.
 
