@@ -6,7 +6,8 @@ services:
     plan: free
     # The API imports the shared save schema from mobile/src.
     buildCommand: cd server && npm ci --omit=dev
-    startCommand: cd server && npm run db:migrate && npm start
+    # Hosted schema is provisioned separately; runtime login has DML access only.
+    startCommand: cd server && npm start
     healthCheckPath: /health
     autoDeployTrigger: "off"
     envVars:
