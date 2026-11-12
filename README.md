@@ -17,7 +17,7 @@ A portrait Android turn-based roguelite RPG built with React Native, Expo and Ty
 
 On November 12, 2026: 48 mobile tests, 10 backend tests and TypeScript checks passed locally. The offline Expo dependency check passed with its offline-validation warning. Historical native Android walkthroughs and screenshots are recorded in `evidence/`; screenshots are not performance benchmarks.
 
-The standalone APK and current hosting status must be checked in the release notes. The temporary demonstration hosting window ends **November 13, 2026 at 12:00 noon Asia/Karachi (07:00 UTC)**. New sign-ins and cloud services require a running API.
+The API is live at https://dungeonbound-api-8fur.onrender.com; `/health` returns save format 3. All 23 hosted acceptance checks passed. Check the release notes for the completed standalone APK. The temporary demonstration hosting window ends **November 13, 2026 at 12:00 noon Asia/Karachi (07:00 UTC)**. New sign-ins and cloud services require a running API.
 
 ## Development
 
@@ -37,3 +37,5 @@ npm.cmd test
 Never commit real environment files, passwords, access/refresh tokens, database dumps or signing keys. Release builds require a real public HTTPS API origin. Preview APKs are for direct installation and use internal preview signing, not Play Store release signing.
 
 The project includes Codex-assisted changes. See the code walkthrough and preserved documentation for implementation details and limitations.
+
+A local Windows task attempts service suspension at the deadline. Keep the PC on and signed in with the Brave/Render session available, and verify suspension in the dashboard. See [delivery notes](docs/DELIVERY_2026-11-12.md).

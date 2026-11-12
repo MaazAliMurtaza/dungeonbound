@@ -21,7 +21,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 OUT = ROOT / 'docs/Dungeonbound_Final_Project_Report.docx'
 STATUS = ROOT / 'artifacts/share/status.json'
-status = json.loads(STATUS.read_text()) if STATUS.exists() else {}
+status = json.loads(STATUS.read_text(encoding="utf-8-sig")) if STATUS.exists() else {}
 doc = Document()
 sec = doc.sections[0]
 sec.page_width, sec.page_height = Inches(8.27), Inches(11.69)
