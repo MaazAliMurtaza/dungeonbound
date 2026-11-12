@@ -1,6 +1,7 @@
 // HTTPS acceptance checks. Credentials stay in process memory; only fixture IDs
 // and pass labels are written. Cleanup the exact fixture accounts via admin SQL.
 import assert from 'node:assert/strict';
+import {isDeepStrictEqual} from 'node:util';
 import {randomBytes, randomUUID} from 'node:crypto';
 import {mkdirSync, writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
@@ -34,7 +35,7 @@ try{
   check(login.status===200,'online login'); sessions.push(login.data.refreshToken);
   const progress=newGame('Warrior',42),timestamp=Date.now();
   check((await request('/save','PUT',{progress,clientUpdatedAt:timestamp},first.accessToken)).status===200,'new save accepted');
-  check(JSON.stringify((await request('/save','GET',undefined,first.accessToken)).data.progress)===JSON.stringify(progress),'complete game save round trip');
+  check(isDeepStrictEqual((await request('/save','GET',undefined,first.accessToken)).data.progress,progress),'complete game save round trip');
   check((await request('/save','GET',undefined,second.accessToken)).data.progress===null,'per-account save isolation');
   check((await request('/save','PUT',{progress:{version:3},clientUpdatedAt:timestamp+1},first.accessToken)).status===400,'malformed save rejected');
   check((await request('/save','PUT',{progress:{...progress,accessToken:'fixture'},clientUpdatedAt:timestamp+1},first.accessToken)).status===400,'credential fields rejected from saves');
