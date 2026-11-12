@@ -27,3 +27,6 @@ evidence/*-setup.json
 evidence/*-restart-verified.json
 evidence/restarted-*.json
 evidence/proposal-short-build.json
+
+# Microsoft Word temporary owner/lock files.
+**/~$*.docx

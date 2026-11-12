@@ -151,9 +151,19 @@ screens = [
     ('proposal-v3-skill-tree.png', 'Skill prerequisites', 'The awakening tree shows prerequisite branches and learned skills.'),
     ('proposal-v3-mastery.png', 'Mastery', 'Assault and Survival specialization are mutually exclusive.'),
     ('phone-v3-home-compact.png', 'Compact layout', 'Recorded compact portrait layout evidence from the Android verification work.')]
+native_evidence = ROOT / 'artifacts/share/apk-native-verification.json'
+if native_evidence.exists() and json.loads(native_evidence.read_text(encoding='utf-8-sig')).get('passed'):
+    screens.extend([
+        ('apk-standalone-login.png', 'Standalone APK launch', 'Freshly installed preview running with bundled JavaScript, without Expo Go or Metro.'),
+        ('apk-standalone-home.png', 'Hosted account and new hunter', 'Online sign-in and normal Warrior creation on the new hosted API.'),
+        ('apk-standalone-dungeon.png', 'Standalone dungeon entry', 'The installed APK enters the dungeon and saves progress through the hosted API.'),
+        ('apk-standalone-offline.png', 'Offline cold restart', 'With emulator Wi-Fi and data disabled, the APK restores the cached identity and adventure after force-stop/relaunch.')])
 for index in range(0,len(screens),2):
     page('5. Interface screenshots and visual evidence' if index == 0 else 'Interface evidence — continued')
-    p('These are existing native Android captures from the November 7 verification work, not newly captured standalone-APK screenshots. Some walkthrough captures use controlled high-stat fixture saves to exercise later progression; they do not represent normal starting balance. Asset filenames prefixed “phone” are preserved evidence names and do not independently prove physical-device testing.')
+    if index < 8:
+        p('These are existing native Android captures from the November 7 verification work, not newly captured standalone-APK screenshots. Some walkthrough captures use controlled high-stat fixture saves to exercise later progression; they do not represent normal starting balance. Asset filenames prefixed “phone” are preserved evidence names and do not independently prove physical-device testing.')
+    else:
+        p('New standalone APK captures from the November 12 delivery check on the read-only Android 11 x86_64 emulator. A disposable account and an ordinary starting Warrior were used. These captures demonstrate installed-APK behavior; they do not certify physical-device performance.')
     t=doc.add_table(rows=1,cols=2)
     for cell,(filename,title,caption) in zip(t.rows[0].cells,screens[index:index+2]):
         cell.paragraphs[0].add_run(title).bold=True

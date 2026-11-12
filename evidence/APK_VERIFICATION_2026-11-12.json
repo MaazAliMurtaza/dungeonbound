@@ -1,0 +1,39 @@
+{
+  "release": "https://github.com/MaazAliMurtaza/dungeonbound/releases/tag/preview-3",
+  "build": "https://github.com/MaazAliMurtaza/dungeonbound/actions/runs/43286985738",
+  "sourceCommit": "90a517442892d4ca2912d89e91f5a1066874b3bb",
+  "package": "com.maazay.dungeonbound",
+  "version": "1.0.0",
+  "bytes": 65057813,
+  "sha256": "a684074726b10e58b8b010be74517d60387e21cfc29753da4518667b0ec443fc",
+  "minimumAndroidApi": 24,
+  "targetAndroidApi": 36,
+  "architectures": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "signature": "APK Signature Scheme v2 verified; internal preview signing",
+  "checksumMatchesRelease": true,
+  "bundledJavaScript": true,
+  "physicalPhoneVerification": "Not run",
+  "hostedApi": {
+    "origin": "https://dungeonbound-api-8fur.onrender.com",
+    "checks": 23,
+    "passed": true,
+    "checkedAt": "2026-11-12T14:04:38.694Z"
+  },
+  "nativeApk": {
+    "passed": true,
+    "platform": "Android 11 read-only x86_64 emulator",
+    "checks": [
+      "standalone bundled launch",
+      "online login",
+      "class creation",
+      "cloud persistence",
+      "dungeon entry",
+      "offline cold restart"
+    ],
+    "checkedAt": "2026-11-12T14:21:56.593Z"
+  },
+  "fixtureCleanup": "All disposable hosted/API and APK accounts removed; zero remaining counts verified."
+}

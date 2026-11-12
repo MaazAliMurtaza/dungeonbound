@@ -7,7 +7,9 @@ A portrait Android turn-based roguelite RPG built with React Native, Expo and Ty
 - [Code walkthrough and viva guide](docs/CODE_WALKTHROUGH.md)
 - [Detailed project documentation](.project-docs/README.md)
 - [Local quick start](.project-docs/QUICK_START.md)
-- [Latest APK releases](https://github.com/MaazAliMurtaza/dungeonbound/releases)
+- [Download the standalone APK](https://github.com/MaazAliMurtaza/dungeonbound/releases/download/preview-3/dungeonbound-preview.apk)
+- [Final Word report](docs/Dungeonbound_Final_Project_Report.docx)
+- [Verified release and installation notes](docs/DELIVERY_2026-11-12.md)
 - [Android build workflow](.github/workflows/android.yml)
 - [Confirmed team responsibilities](.project-docs/TEAM_ROLES.md)
 
@@ -17,7 +19,7 @@ A portrait Android turn-based roguelite RPG built with React Native, Expo and Ty
 
 On November 12, 2026: 48 mobile tests, 10 backend tests and TypeScript checks passed locally. The offline Expo dependency check passed with its offline-validation warning. Historical native Android walkthroughs and screenshots are recorded in `evidence/`; screenshots are not performance benchmarks.
 
-The API is live at https://dungeonbound-api-8fur.onrender.com; `/health` returns save format 3. All 23 hosted acceptance checks passed. Check the release notes for the completed standalone APK. The temporary demonstration hosting window ends **November 13, 2026 at 12:00 noon Asia/Karachi (07:00 UTC)**. New sign-ins and cloud services require a running API.
+The API is live at https://dungeonbound-api-8fur.onrender.com; `/health` returns save format 3. All 23 hosted acceptance checks passed. Standalone APK preview-3 passed installation, hosted login, saving and offline-restart checks on an Android 11 emulator. It supports ARM64 Android 7+ phones; physical-phone installation remains unverified. The temporary demonstration hosting window ends **November 13, 2026 at 12:00 noon Asia/Karachi (07:00 UTC)**. New sign-ins and cloud services require a running API.
 
 ## Development
 
