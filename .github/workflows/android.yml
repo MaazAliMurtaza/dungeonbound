@@ -29,6 +29,7 @@ jobs:
           java-version: "21"
       - uses: android-actions/setup-android@v3
         with:
+          cmdline-tools-version: 16111833
           packages: platform-tools
           log-accepted-android-sdk-licenses: false
       - run: npm ci
@@ -40,7 +41,7 @@ jobs:
           npm run typecheck
           npm test
       - name: Install build components on the disposable runner
-        run: sdkmanager "platforms;android-37" "build-tools;37.0.0" "ndk;27.1.12297006" "cmake;3.30.5" "cmake;3.22.1"
+        run: sdkmanager "platforms;android-37.0" "build-tools;37.0.0" "ndk;27.1.12297006" "cmake;3.30.5" "cmake;3.22.1"
       - name: Generate native project
         working-directory: mobile
         run: npx expo prebuild --platform android --no-install
